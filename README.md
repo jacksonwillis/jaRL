@@ -28,9 +28,10 @@ Neither is `/exit`.
 
 ## syntax definition
 
-    Expression ::= (Whitespace* '(') (Symbol) (Whitespace Argument)* Whitespace* (')')
-    Argument ::= (String|Numeral|Expression)
-    Numeral ::= ("-")? ("\d")+ ((".") ("\d")+)?
+    Expression ::= (Whitespace* '(') (Symbol) (Whitespace Argument)* Whitespace* (')') Whitespace*
+    Symbol ::= ("a-z" | "A-Z" | "+" | "-" | "*" | "/" | "=" | "_")+
+    Argument ::= (String | Numeral | Expression)
+    Numeral ::= ("-")? (digit)+ ((".") (digit)+)?
     String ::= ("'") ("[^\']")* ("'")
     Comment ::= ("#") (anything)* (end-of-line)
 
