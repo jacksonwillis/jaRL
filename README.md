@@ -24,7 +24,7 @@ That's not defined in jaRL.
 `(.foo ...args...)` gives you, in Ruby, `[...args...].map(&:foo)`
 
 Neither is `/exit`.
-`(/foo)`
+`(/foo)` gives you `Kernel.__send__(:foo)`
 
 ## syntax definition
 
