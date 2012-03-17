@@ -1,0 +1,2 @@
+(label name 'Gustave') # Set variable `name` to 'Gustave'
+(println 'Joyeux anniversaire, ' name '!')

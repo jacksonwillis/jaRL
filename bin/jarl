@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require "jarl"
+
+data = ARGF.read
+parsed = Jarl::Parser.parse(data)
+
+# puts data, "\n----\n\n", parsed.inspect, "\n----\n\n"
+
+e = ULithp.new
+parsed.each { |expr| e.eval expr }

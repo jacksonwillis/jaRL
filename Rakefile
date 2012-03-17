@@ -17,9 +17,11 @@ Jeweler::Tasks.new do |gem|
   gem.license               = "MIT"
   gem.summary               = "just another Ruby Lisp ツ"
   gem.description           = "a Lisp dialect with access to Ruby libraries"
-  gem.required_ruby_version = "1.9.2"
+  gem.required_ruby_version = ">= 1.9.2"
+  gem.executables           = ["jarl"]
   gem.email                 = "railsmail42@gmail.com"
   gem.authors               = ["Jackson Willis"]
+  gem.files                 = FileList['lib/**/*.rb', 'bin/*', '[\w]+'].to_a
 end
 Jeweler::RubygemsDotOrgTasks.new
 
