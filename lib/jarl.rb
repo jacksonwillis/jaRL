@@ -97,7 +97,7 @@ module Jarl
       {
         /\(/ => :expr_open,
         /\)/ => :expr_close,
-        /\'/ => :str
+        /\"/ => :str
       }
     end
 

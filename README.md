@@ -4,9 +4,9 @@
 
 ```common-lisp
 (label happy (quote (lambda (name)
-   (println 'Joyeux anniversaire, ' name '!'))))
+   (println "Joyeux anniversaire, " name "!"))))
 
-(happy 'Gustave')
+(happy "Gustave")
 ```
 
 ## uLithp
