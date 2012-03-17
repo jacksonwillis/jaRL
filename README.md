@@ -8,6 +8,13 @@
 
 (happy "Gustave")
 ```
+## syntax definition
+
+    Expression ::= (Whitespace* '(') (Symbol) (Whitespace Argument)* Whitespace* (')')
+    Argument ::= (String|Numeral|Expression)
+    Numeral ::= ("-")? ("\d")+ ((".") ("\d")+)?
+    String ::= ("'") ("[^\']")* ("'")
+    Comment ::= ("#") (anything)* (end-of-line)
 
 ## uLithp
 
