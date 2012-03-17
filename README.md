@@ -9,7 +9,7 @@
 (happy "Gustave")
 ```
 
-# gimmeh ruby!
+## gimmeh ruby!
 
 ```common-lisp
 (print "What is your name? ") (label name (getln))
