@@ -187,7 +187,9 @@ module Jarl
         print: ->(a, _) { print *a },
         println: ->(a, _) { print *a; puts },
         getln: ->(a, _) { STDIN.gets.chomp },
-        p: ->(a, _) { p *a }
+        p: ->(a, _) { p *a },
+        then: ->(sexpr, _) { eval(sexpr[0], _) },
+        else: ->(sexpr, _) { eval(sexpr[0], _) }
       }
     end
   end

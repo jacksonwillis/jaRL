@@ -5,4 +5,4 @@ require "jarl"
 data = ARGF.read
 parsed = Jarl::Parser.parse(data)
 lisp = Jarl::Lisp.new
-parsed.each { |expr| Thread.new { lisp.eval(expr) }.join }
+parsed.each { |expr| lisp.eval(expr) }

@@ -49,7 +49,7 @@ class Lisp
     end
 
     args = (sexpr.drop 1)
-    args = args.map { |a| self.eval(a, ctx) } if not [:quote, :if, :function].member? fn
+    args = args.map { |a| self.eval(a, ctx) } if not [:quote, :if, :then, :else, :function].member? fn
     apply(fn, args, ctx, ruby)
   end
 end
