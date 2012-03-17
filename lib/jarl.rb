@@ -89,7 +89,7 @@ module Jarl
     def literals
       {
         /[\w\+\-\*\/=]+/ => :symbol,
-        /\d+(\.\d+)?/ => :numeric
+        /\-?\d+(\.\d+)?/ => :numeric
       }
     end
 
