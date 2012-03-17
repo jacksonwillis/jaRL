@@ -25,6 +25,15 @@ class Array
   end
 end
 
+class Hash
+  def +(add)
+    temp = {}
+    add.each { |k, v| temp[k] = v}
+    self.each { |k, v| temp[k] = v}
+    temp
+  end
+end
+
 module Jarl
   class Data
     attr_accessor :data
@@ -170,5 +179,15 @@ module Jarl
     end
 
     extend self
+  end
+
+  class Lisp < ::Lisp
+    def default_env
+      super + {
+        print: ->(a, _) { print *a },
+        println: ->(a, _) { print *a; puts },
+        p: ->(a, _) { p *a }
+      }
+    end
   end
 end

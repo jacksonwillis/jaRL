@@ -4,8 +4,5 @@ require "jarl"
 
 data = ARGF.read
 parsed = Jarl::Parser.parse(data)
-
-# puts data, "\n----\n\n", parsed.inspect, "\n----\n\n"
-
-e = ULithp.new
-parsed.each { |expr| e.eval expr }
+lisp = Jarl::Lisp.new
+parsed.each { |expr| lisp.eval expr }
