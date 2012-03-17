@@ -186,6 +186,7 @@ module Jarl
       super + {
         print: ->(a, _) { print *a },
         println: ->(a, _) { print *a; puts },
+        getln: ->(a, _) { STDIN.gets.chomp },
         p: ->(a, _) { p *a }
       }
     end

@@ -8,6 +8,24 @@
 
 (happy "Gustave")
 ```
+
+# gimmeh ruby!
+
+```common-lisp
+(print "What is your name? ") (label name (getln))
+
+(if (eq name "exit") (/exit))
+
+(println "heheh, " (car (.reverse name)) ".")
+```
+
+See that `.reverse` function?
+That's not defined in jaRL.
+`(.foo ...args...)` gives you, in Ruby, `[...args...].map(&:foo)`
+
+Neither is `/exit`.
+`(/foo)`
+
 ## syntax definition
 
     Expression ::= (Whitespace* '(') (Symbol) (Whitespace Argument)* Whitespace* (')')
@@ -15,6 +33,8 @@
     Numeral ::= ("-")? ("\d")+ ((".") ("\d")+)?
     String ::= ("'") ("[^\']")* ("'")
     Comment ::= ("#") (anything)* (end-of-line)
+
+All numerals are floats right now.
 
 ## uLithp
 

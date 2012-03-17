@@ -1,0 +1,5 @@
+(print "What is your name? ") (label name (getln))
+
+(if (eq name "exit") (/exit))
+
+(println "heheh, " (car (.reverse name)) ".")

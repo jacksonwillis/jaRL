@@ -20,11 +20,12 @@ class Lisp
     }
   end
 
-  def apply fn, args, ctx=@env, ruby_method=false
-    if @env[fn].respond_to? :call
-      return ruby_method ? @env[fn].call(*args) : @env[fn].call(args, ctx)
+  def apply fn, args, ctx=@env, ruby=false
+    if @env[fn].respond_to? :call || ruby
+      return ruby ? @env[fn].call(*args) : @env[fn].call(args, ctx)
     end
 
+    raise NoMethodError, "Unknown uLithp function #{fn}" unless @env[fn]
     self.eval @env[fn][2], Hash[*(@env[fn][1].zip args).flatten(1)]
   end
 
@@ -36,14 +37,19 @@ class Lisp
 
     fn = sexpr[0]
 
-    ruby_method = fn =~ /^\// # trying to call a ruby function
-    if ruby_method
+    ruby = false
+    if fn =~ /^\// # trying to call a ruby function
+      ruby = true
       rfn = method(fn.to_s.sub(/^\//,''))
       @env[fn] = rfn
+    elsif fn =~ /^\./ # trying to call a ruby method
+      #ruby = true
+      rfn = fn.to_s.sub(/^\./,'')
+      @env[fn] = lambda { |a, _| a.map { |e| e.__send__(rfn) } }
     end
 
     args = (sexpr.drop 1)
-    args = args.map { |a| self.eval(a, ctx) } if not [:quote, :if].member? fn
-    apply(fn, args, ctx, ruby_method)
+    args = args.map { |a| self.eval(a, ctx) } if not [:quote, :if, :function].member? fn
+    apply(fn, args, ctx, ruby)
   end
 end
