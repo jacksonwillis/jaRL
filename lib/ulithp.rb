@@ -15,7 +15,15 @@ class Lisp
       :cdr => lambda { |(list), _| list.drop 1 },
       :cons => lambda { |(e,cell), _| [e] + cell },
       :eq => lambda { |(l,r), _| l == r },
-      :if => lambda { |(cond, thn, els), ctx| eval(cond, ctx) ? eval(thn, ctx) : eval(els, ctx) },
+      :if => lambda { |(cond, thn, els), ctx|
+
+        if !eval(cond, ctx).empty?
+          thn ? eval(thn, ctx) : true
+        else
+          els ? eval(els, ctx) : false
+        end
+
+      },
       :atom => lambda { |(sexpr), _| [Symbol, Numeric, String].map { |klass| sexpr.is_a? klass }.any? }
     }
   end
