@@ -2,6 +2,16 @@
 # http://joyofclojure.com
 # https://github.com/fogus/ulithp/blob/master/lithp.rb
 
+class Object
+  def blank?
+    respond_to?(:empty?) ? empty? : !self
+  end
+
+  def unblank?
+    !blank?
+  end
+end
+
 class Lisp
   def initialize(env = nil)
     @env = default_env
@@ -17,7 +27,7 @@ class Lisp
       :eq => lambda { |(l,r), _| l == r },
       :if => lambda { |(cond, thn, els), ctx|
 
-        if !eval(cond, ctx).empty?
+        if eval(cond, ctx).unblank?
           thn ? eval(thn, ctx) : true
         else
           els ? eval(els, ctx) : false

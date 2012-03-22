@@ -1,15 +1,12 @@
 (print "What is your name? ")
 (label name (getln))
 
-(if (eq name "exit")
-  (then (/exit))
-  (else (println "heheh, " (car (.reverse name)) ".")))
+(if (eq name "exit") (/exit))
+(println "heheh, " (car (.reverse name)) "."))
 
 # print "What is your name? "
 # name = gets.chomp
 #
-# if name == "exit"
-#   exit
-# else
-#   puts "heheh, " name.reverse, "."
-# end
+# exit if name == "exit"
+#
+# puts "heheh, " name.reverse, "."
