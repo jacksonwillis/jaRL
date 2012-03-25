@@ -1,9 +1,11 @@
 # jaRL -- just another Ruby Lisp ツ
 
+![jaRL logo](http://github.com/downloads/jacksonwillis/jaRL/jaRL.png)
+
 ## hello, world!
 
 ```common-lisp
-(label happy (quote (lambda (name)
+(define happy (quote (lambda (name)
    (println "Joyeux anniversaire, " name "!"))))
 
 (happy "Gustave")
@@ -12,19 +14,19 @@
 ## gimmeh ruby!
 
 ```common-lisp
-(print "What is your name? ") (label name (getln))
+(print "What is your name? ")
+(define name (getln))
+(println "Your code name is... " (.reverse name) "!")
 
-(if (eq name "exit") (/exit))
-
-(println "heheh, " (car (.reverse name)) ".")
+(print "How old are you? ")
+(define age (.to_f (getln)))
+(if (>= age 100) (println "Wow! You are really old!"))
+(println "Your age in dog years is... " (* 7 age) "!"))
 ```
 
-See that `.reverse` function?
-That's not defined in jaRL.
-`(.foo ...args...)` gives you, in Ruby, `[...args...].map(&:foo)`
+`([function starting with '.'] [a jarl object])` gives you `[that object in ruby].__send__([function])`.
 
-Neither is `/exit`.
-`(/foo)` gives you `Kernel.__send__(:foo)`
+So `(.reverse "gnirts")` in jaRL is equal to `"gnirts".reverse` in Ruby.
 
 ## syntax definition
 
