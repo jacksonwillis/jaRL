@@ -23,6 +23,10 @@ class Array
 
     return result
   end
+
+  def rest
+    self[1..-1]
+  end
 end
 
 class Hash
@@ -188,8 +192,17 @@ module Jarl
         println: ->(a, _) { print *a; puts },
         getln: ->(a, _) { STDIN.gets.chomp },
         p: ->(a, _) { p *a },
-        then: ->(sexpr, _) { eval(sexpr[0], _) },
-        else: ->(sexpr, _) { eval(sexpr[0], _) }
+        :"="   => lambda { |(l,r), _| l == r },
+        :"<="  => lambda { |(l,r), _| l <= r },
+        :">="  => lambda { |(l,r), _| l >= r },
+        :"<"   => lambda { |(l,r), _| l < r },
+        :">"   => lambda { |(l,r), _| l > r },
+        :"+"   => lambda { |list, _| list.reduce(:"+") },
+        :"-"   => lambda { |list, _| list.length == 1 ? -list.first : list.first - list.rest.reduce(:"+") },
+        :"*"   => lambda { |list, _| list.reduce(:"*") },
+        :"/"   => lambda { |list, _| list.length == 1 ? list.first : list.first - list.rest.reduce(:"*") },
+        :env   => lambda { |_, __| @env.keys },
+        :range => lambda { |(a,b), _| (a..b).to_a }
       }
     end
   end

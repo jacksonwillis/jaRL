@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require "jarl"
+require "pp"
+
+pp Jarl::Parser.parse(ARGF.read)

@@ -1,12 +1,15 @@
 (print "What is your name? ")
-(label name (getln))
 
-(if (eq name "exit") (/exit))
-(println "heheh, " (car (.reverse name)) "."))
+(define name (getln))
 
-# print "What is your name? "
-# name = gets.chomp
-#
-# exit if name == "exit"
-#
-# puts "heheh, " name.reverse, "."
+(println "Your code name is... " (.reverse name) "!")
+
+
+
+(print "How old are you? ")
+
+(define age (.to_f (getln)))
+
+(if (>= age 100) (println "Wow! You are really old!"))
+
+(println "Your age in dog years is... " (* 7 age) "!"))

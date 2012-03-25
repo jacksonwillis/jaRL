@@ -12,6 +12,12 @@ class Object
   end
 end
 
+class Array
+  def first_if_one_member
+    size == 1 ? at(0) : self
+  end
+end
+
 class Lisp
   def initialize(env = nil)
     @env = default_env
@@ -20,6 +26,7 @@ class Lisp
   def default_env
     {
       :label => lambda { |(name,val), _| @env[name] = val },
+      :define => lambda { |(name,val), _| @env[name] = val },
       :quote => lambda { |sexpr, _| sexpr[0] },
       :car => lambda { |(list), _| list[0] },
       :cdr => lambda { |(list), _| list.drop 1 },
@@ -34,16 +41,20 @@ class Lisp
         end
 
       },
+      then: lambda { |sexpr, _| eval(sexpr[0], _) },
+      else: lambda { |sexpr, _| eval(sexpr[0], _) },
       :atom => lambda { |(sexpr), _| [Symbol, Numeric, String].map { |klass| sexpr.is_a? klass }.any? }
     }
   end
 
   def apply fn, args, ctx=@env, ruby=false
-    if @env[fn].respond_to? :call || ruby
-      return ruby ? @env[fn].call(*args) : @env[fn].call(args, ctx)
+    fn = fn.to_sym
+
+    if ctx[fn].respond_to? :call || ruby
+      return ruby ? ctx[fn].call(*args) : ctx[fn].call(args, ctx)
     end
 
-    raise NoMethodError, "Unknown uLithp function #{fn}" unless @env[fn]
+    raise NoMethodError, "Unknown uLithp function #{fn}" unless ctx[fn]
     self.eval @env[fn][2], Hash[*(@env[fn][1].zip args).flatten(1)]
   end
 
@@ -53,7 +64,7 @@ class Lisp
       return sexpr
     end
 
-    fn = sexpr[0]
+    fn = sexpr[0].to_sym
 
     ruby = false
     if fn =~ /^\// # trying to call a ruby function
@@ -63,7 +74,7 @@ class Lisp
     elsif fn =~ /^\./ # trying to call a ruby method
       #ruby = true
       rfn = fn.to_s.sub(/^\./,'')
-      @env[fn] = lambda { |a, _| a.map { |e| e.__send__(rfn) } }
+      @env[fn] = lambda { |a, _| a.map { |e| e.__send__(rfn) }.first_if_one_member }
     end
 
     args = (sexpr.drop 1)
